@@ -1,12 +1,16 @@
 #include <QCoreApplication>
 #include <QTextStream>
+#include "filewatcher.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     QTextStream cout(stdout);
+    QTextStream cin(stdin);
 
-    cout << "Введите пути к файлам для отслеживания" << Qt::endl;
+    cout << "Enter file paths to watch (empty line to start):" << Qt::endl;
+
+    FileWatcher watcher;
     QString line;
 
     // Ввод файлов для отслеживания
@@ -14,7 +18,7 @@ int main(int argc, char *argv[])
     {
         cout << "> ";
         cout.flush();
-        line = cout.readLine();
+        line = cin.readLine();
 
         if (!line.isEmpty())
         {
@@ -25,7 +29,7 @@ int main(int argc, char *argv[])
 
     if (watcher.filesCount() == 0)
     {
-        cout << "\nНе добавлено ни одного файла. Программа завершена." << Qt::endl;
+        cout << "\nNot add any file. exit" << Qt::endl;
         return 0;
     }
 

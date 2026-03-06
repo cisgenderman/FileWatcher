@@ -3,10 +3,14 @@
 
 #include <QTextStream>
 #include <QTimer>
+#include <QObject>
+#include <QFileInfo>
+#include <QVector>
 
 
-class FileWatcher
+class FileWatcher: public QObject
 {
+    Q_OBJECT
 public:
     explicit FileWatcher(QObject *parent = nullptr);
 
@@ -15,6 +19,8 @@ public:
 
     // Запуск отслеживания
     void startWatching();
+
+    int filesCount() const;
 
 private slots:
     // Слот для проверки состояния файлов
