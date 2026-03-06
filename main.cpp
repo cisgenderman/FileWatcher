@@ -1,19 +1,36 @@
 #include <QCoreApplication>
+#include <QTextStream>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    QTextStream cout(stdout);
 
-    // Set up code that uses the Qt event loop here.
-    // Call a.quit() or a.exit() to quit the application.
-    // A not very useful example would be including
-    // #include <QTimer>
-    // near the top of the file and calling
-    // QTimer::singleShot(5000, &a, &QCoreApplication::quit);
-    // which quits the application after 5 seconds.
+    cout << "Введите пути к файлам для отслеживания" << Qt::endl;
+    QString line;
 
-    // If you do not need a running Qt event loop, remove the call
-    // to a.exec() or use the Non-Qt Plain C++ Application template.
+    // Ввод файлов для отслеживания
+    do
+    {
+        cout << "> ";
+        cout.flush();
+        line = cout.readLine();
+
+        if (!line.isEmpty())
+        {
+            watcher.addFile(line);
+        }
+    }
+    while (!line.isEmpty());
+
+    if (watcher.filesCount() == 0)
+    {
+        cout << "\nНе добавлено ни одного файла. Программа завершена." << Qt::endl;
+        return 0;
+    }
+
+    // Запуск отслеживания
+    watcher.startWatching();
 
     return a.exec();
 }
